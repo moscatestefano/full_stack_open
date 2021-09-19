@@ -79,15 +79,14 @@ const App = () => {
 
   const cancelEntry = (event) => {
     const reference = event.target.attributes.idref.value
-    const match = persons.find(person => person.id == reference)
-    
+    const match = persons.find(person => String(person.id) === reference)
     let result = window.confirm(`${match.name} is going to be deleted. Do you wish to continue?`)
 
     if (result) {
       numberService
       .cancel(reference)
       .then(response => {
-        setPersons(persons.filter(person => person.id != reference))
+        setPersons(persons.filter(person => String(person.id) !== reference))
         setSuccessMessage(`${match.name} has been deleted.`)
         setTimeout(() => {
           setSuccessMessage(null)
